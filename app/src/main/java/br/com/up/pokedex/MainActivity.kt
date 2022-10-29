@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.up.pokedex.adapter.PokeAdapter
+import br.com.up.pokedex.network.PokeApi
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,9 +17,14 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.poke_recycler)
 
         recycler.layoutManager = GridLayoutManager(
-            this,2)
+            this,3)
 
-        recycler.adapter = PokeAdapter()
+        PokeApi().getPokemons { pokemons ->
+
+            if(pokemons != null){
+                recycler.adapter = PokeAdapter(pokemons)
+            }
+        }
 
     }
 }

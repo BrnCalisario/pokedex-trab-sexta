@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.up.pokedex.R
+import br.com.up.pokedex.model.Pokemon
 import com.squareup.picasso.Picasso
 
-class PokeAdapter() :
+class PokeAdapter(private val pokemons:List<Pokemon>) :
     RecyclerView.Adapter<PokeAdapter.PokeViewHolder>() {
 
     inner class PokeViewHolder(itemView:View) :
@@ -30,7 +31,13 @@ class PokeAdapter() :
     override fun onBindViewHolder(holder: PokeViewHolder,
                                   position: Int) {
 
-        val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
+        val pokemon = pokemons[position]
+
+        val paths = pokemon.url.split("/")
+
+        val id = paths[paths.size - 2]
+
+        val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png"
 
         val imageView : ImageView = holder.itemView.findViewById(R.id.poke_image)
 
@@ -38,6 +45,6 @@ class PokeAdapter() :
     }
 
     override fun getItemCount(): Int {
-        return 15
+        return pokemons.size
     }
 }
